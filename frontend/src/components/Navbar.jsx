@@ -1,7 +1,10 @@
 import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { MyContext } from "../context/MyContext";
 
 const Navbar = () => {
     const setActiveClass = ({ isActive }) => (isActive ? "active" : undefined);
+    const { token, logout } = useContext(MyContext);
 
     return (
         <nav className="navbar navbar-dark bg-dark">
@@ -15,17 +18,25 @@ const Navbar = () => {
                         Home
                     </NavLink>
 
-                    <NavLink className={setActiveClass} to="/registro">
-                        Registrarse
-                    </NavLink>
-
-                    <NavLink className={setActiveClass} to="/login">
-                        Iniciar Sesión
-                    </NavLink>
-
-                    <NavLink className={setActiveClass} to="/perfil">
-                        Mi Perfil
-                    </NavLink>
+                    {token ? (
+                        <>
+                            <NavLink className={setActiveClass} to="/perfil">
+                                Mi Perfil
+                            </NavLink>
+                            <button onClick={logout} className="btn btn-danger btn-sm">
+                                Cerrar Sesión
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <NavLink className={setActiveClass} to="/registro">
+                                Registrarse
+                            </NavLink>
+                            <NavLink className={setActiveClass} to="/login">
+                                Iniciar Sesión
+                            </NavLink>
+                        </>
+                    )}
                 </div>
             </div>
         </nav>
