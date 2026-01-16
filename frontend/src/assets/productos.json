@@ -1,0 +1,30 @@
+[
+    {
+        "id": "1",
+        "name": "Cámara Reflex",
+        "desc": "Cámara de alta resolución para fotografía profesional.",
+        "price": 450000,
+        "img": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+    },
+    {
+        "id": "2",
+        "name": "Lentes de Sol",
+        "desc": "Protección UV con estilo clásico.",
+        "price": 50000,
+        "img": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+    },
+    {
+        "id": "3",
+        "name": "Audífonos Gamer",
+        "desc": "Sonido envolvente y micrófono con cancelación de ruido.",
+        "price": 120000,
+        "img": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+    },
+    {
+        "id": "4",
+        "name": "Reloj Inteligente",
+        "desc": "Monitorea tu salud y notificaciones en tu muñeca.",
+        "price": 85000,
+        "img": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+    }
+]
