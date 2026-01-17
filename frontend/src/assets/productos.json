@@ -1,30 +1,74 @@
 [
     {
         "id": "1",
-        "name": "Cámara Reflex",
-        "desc": "Cámara de alta resolución para fotografía profesional.",
+        "name": "Cámara Sony Alpha",
+        "desc": "Mirrorless 4K",
         "price": 450000,
-        "img": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+        "condition": "Nuevo",
+        "img": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=500&q=60"
     },
     {
         "id": "2",
-        "name": "Lentes de Sol",
-        "desc": "Protección UV con estilo clásico.",
+        "name": "Ray-Ban Wayfarer",
+        "desc": "Clásicos UV400",
         "price": 50000,
-        "img": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+        "condition": "Nuevo",
+        "img": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=500&q=60"
     },
     {
         "id": "3",
-        "name": "Audífonos Gamer",
-        "desc": "Sonido envolvente y micrófono con cancelación de ruido.",
+        "name": "Headset HyperX",
+        "desc": "Sonido 7.1",
         "price": 120000,
-        "img": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+        "condition": "Usado",
+        "img": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=60"
     },
     {
         "id": "4",
-        "name": "Reloj Inteligente",
-        "desc": "Monitorea tu salud y notificaciones en tu muñeca.",
-        "price": 85000,
-        "img": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+        "name": "Apple Watch SE",
+        "desc": "GPS Aluminio",
+        "price": 285000,
+        "condition": "Caja Abierta",
+        "img": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=60"
+    },
+    {
+        "id": "5",
+        "name": "MacBook Pro 14",
+        "desc": "M1 Pro 16GB",
+        "price": 1800000,
+        "condition": "Nuevo",
+        "img": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=500&q=60"
+    },
+    {
+        "id": "6",
+        "name": "JBL Flip 5",
+        "desc": "Bluetooth Waterproof",
+        "price": 79990,
+        "condition": "Usado",
+        "img": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=500&q=60"
+    },
+    {
+        "id": "7",
+        "name": "PS5 Control",
+        "desc": "DualSense White",
+        "price": 65000,
+        "condition": "Nuevo",
+        "img": "https://images.unsplash.com/photo-1606318801954-d46d46d3360a?auto=format&fit=crop&w=500&q=60"
+    },
+    {
+        "id": "8",
+        "name": "Iphone 13",
+        "desc": "128GB Midnight",
+        "price": 600000,
+        "condition": "Caja Abierta",
+        "img": "https://images.unsplash.com/photo-1632661674596-df8be070a5c5?auto=format&fit=crop&w=500&q=60"
+    },
+    {
+        "id": "9",
+        "name": "Monitor LG 27",
+        "desc": "4K IPS 144Hz",
+        "price": 320000,
+        "condition": "Usado",
+        "img": "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=500&q=60"
     }
 ]

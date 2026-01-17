@@ -29,10 +29,10 @@ const Login = () => {
     return (
         <div className="container mt-5">
             <div className="col-10 col-md-8 col-lg-6 mx-auto">
-                <h2 className="text-center mb-4">Iniciar Sesión</h2>
+                <h2 className="text-center mb-4 text-light">Iniciar Sesión</h2>
                 <div className="card p-4 shadow-sm">
                     <div className="mb-3">
-                        <label className="form-label">Email address</label>
+                        <label className="form-label">Email</label>
                         <input
                             type="email"
                             name="email"
@@ -51,7 +51,7 @@ const Login = () => {
                             onChange={handleSetUsuario}
                         />
                     </div>
-                    <button onClick={iniciarSesion} className="btn btn-success w-100 mt-3">Iniciar Sesión</button>
+                    <button onClick={iniciarSesion} className="btn btn-primary w-100 mt-3">Iniciar Sesión</button>
                 </div>
             </div>
         </div>

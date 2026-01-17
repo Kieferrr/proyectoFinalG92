@@ -8,7 +8,7 @@ export default defineConfig({
       scss: {
         quietDeps: true,
         api: 'modern-compiler',
-        silenceDeprecations: ['legacy-js-api', 'import', 'global-builtin', 'color-functions', 'mixed-decls', 'if-function']
+        silenceDeprecations: ['legacy-js-api', 'import', 'global-builtin', 'color-functions', 'if-function']
       }
     }
   }

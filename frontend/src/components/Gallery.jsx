@@ -1,20 +1,24 @@
-import { useContext } from "react";
-import { MyContext } from "../context/MyContext";
+import { useNavigate } from "react-router-dom";
 
-const Gallery = () => {
-    const { data } = useContext(MyContext);
+const Gallery = ({ items }) => {
+    const navigate = useNavigate();
 
     return (
-        <div className="row">
-            {data.map((product) => (
-                <div key={product.id} className="col-12 col-md-3 mb-4">
-                    <div className="card h-100">
-                        <img src={product.img} className="card-img-top" alt={product.name} />
+        <div className="row g-3 mb-5">
+            {items.map((product) => (
+                <div key={product.id} className="col-6 col-md-4 col-lg-2">
+                    <div
+                        className="card product-card"
+                        onClick={() => navigate(`/producto/${product.id}`)}
+                    >
+                        <div className="img-wrapper">
+                            <img src={product.img} className="card-img-top" alt={product.name} />
+                            <span className="badge-condition">{product.condition}</span>
+                        </div>
+
                         <div className="card-body">
-                            <h5 className="card-title">{product.name}</h5>
-                            <p className="card-text">{product.desc}</p>
-                            <p className="fw-bold">${product.price}</p>
-                            <button className="btn btn-primary">Ver Más</button>
+                            <h5 className="product-name">{product.name}</h5>
+                            <p className="product-price">${product.price.toLocaleString("es-CL")}</p>
                         </div>
                     </div>
                 </div>

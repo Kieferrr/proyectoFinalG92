@@ -50,16 +50,16 @@ const Registro = () => {
                         />
                     </div>
                     <div className="mb-3">
-                        <label className="form-label">Avatar URL</label>
+                        <label className="form-label">Foto de perfil (Opcional)</label>
                         <input
                             type="text"
                             name="avatar"
                             className="form-control"
-                            placeholder="https://foto.com/perfil.jpg"
+                            placeholder="URL"
                             onChange={handleSetUsuario}
                         />
                     </div>
-                    <button className="btn btn-warning w-100 mt-3">Registrarme</button>
+                    <button className="btn btn-primary w-100 mt-3">Registrarme</button>
                 </div>
             </div>
         </div>
