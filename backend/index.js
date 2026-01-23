@@ -2,10 +2,12 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const { obtenerProductos, verificarCredenciales } = require('./consultas');
+const { obtenerProductos, verificarCredenciales, obtenerUsuario } = require('./consultas');
+const { verificarToken, reportarConsulta } = require('./middlewares');
 
 app.use(cors());
 app.use(express.json());
+app.use(reportarConsulta);
 
 app.get('/productos', async (req, res) => {
     try {
@@ -19,15 +21,23 @@ app.get('/productos', async (req, res) => {
 app.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-
         await verificarCredenciales(email, password);
-
         const token = jwt.sign({ email }, process.env.JWT_SECRET);
-
         res.send(token);
     } catch (error) {
         console.log(error);
         res.status(error.code || 500).send(error);
+    }
+});
+
+app.get('/usuarios', verificarToken, async (req, res) => {
+    try {
+        const token = req.header("Authorization").split("Bearer ")[1];
+        const { email } = jwt.decode(token);
+        const usuario = await obtenerUsuario(email);
+        res.json(usuario);
+    } catch (error) {
+        res.status(500).send(error);
     }
 });
 
