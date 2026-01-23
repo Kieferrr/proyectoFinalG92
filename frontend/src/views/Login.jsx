@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { MyContext } from "../context/MyContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
     const [usuario, setUsuario] = useState({
@@ -21,8 +22,9 @@ const Login = () => {
         if (usuario.email !== "" && usuario.password !== "") {
             login();
             navigate("/");
+            toast.success("¡Bienvenido de nuevo!");
         } else {
-            alert("Completa los campos");
+            toast.error("Por favor, completa todos los campos");
         }
     };
 

@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { MyContext } from "../context/MyContext";
+import { toast } from "react-toastify";
 
 const Detalle = () => {
     const { id } = useParams();
@@ -43,7 +44,9 @@ const Detalle = () => {
 
     const handleEnviarCorreo = (e) => {
         e.preventDefault();
-        alert(`Mensaje enviado con éxito a: vendedor@kieferstore.cl\n\nTu mensaje: "${mensaje}"`);
+        toast.success(`✉️ Mensaje enviado a: vendedor@kieferstore.cl`, {
+            icon: "🚀"
+        });
         setShowModal(false);
         setMensaje("");
     };

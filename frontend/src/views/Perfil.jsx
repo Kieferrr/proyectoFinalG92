@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { MyContext } from "../context/MyContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Perfil = () => {
     const { logout } = useContext(MyContext);
@@ -15,7 +16,7 @@ const Perfil = () => {
     const handleDelete = () => {
         const confirm = window.confirm("¿Estás seguro de que quieres eliminar esta publicación?");
         if (confirm) {
-            alert("Publicación eliminada (Simulado)");
+            toast.info("Publicación eliminada correctamente");
         }
     };
 

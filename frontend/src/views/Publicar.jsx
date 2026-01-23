@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Publicar = () => {
     const navigate = useNavigate();
@@ -17,7 +18,7 @@ const Publicar = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert("Producto publicado con éxito (Simulado)");
+        toast.success("¡Producto publicado con éxito!");
         navigate("/perfil");
     };
 

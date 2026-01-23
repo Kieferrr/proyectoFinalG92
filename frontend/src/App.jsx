@@ -3,6 +3,8 @@ import { useContext } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import MyProvider, { MyContext } from "./context/MyContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Home from "./views/Home";
 import Registro from "./views/Registro";
@@ -48,6 +50,11 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
+        <ToastContainer
+          position="bottom-right"
+          autoClose={3000}
+          theme="dark"
+        />
       </BrowserRouter>
     </MyProvider>
   );
