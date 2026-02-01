@@ -1,4 +1,5 @@
-const URL_BASE = "http://localhost:3000";
+// const URL_BASE = "http://localhost:3000";
+const URL_BASE = "https://kieferstore-backend.onrender.com";
 
 export const registerUser = async (email, password, rol, lenguage, nombre) => {
     try {
