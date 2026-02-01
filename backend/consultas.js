@@ -32,8 +32,16 @@ const obtenerUsuario = async (email) => {
     return rows[0];
 };
 
+const registrarUsuario = async (nombre, email, password, rol, lenguage) => {
+    const consulta = "INSERT INTO usuarios (id, nombre, email, password, rol, lenguage) VALUES (DEFAULT, $1, $2, $3, $4, $5) RETURNING *";
+    const values = [nombre, email, password, rol, lenguage];
+    const { rowCount } = await pool.query(consulta, values);
+    if (!rowCount) throw { code: 500, message: "No se pudo registrar el usuario" };
+};
+
 module.exports = {
     obtenerProductos,
     verificarCredenciales,
-    obtenerUsuario
+    obtenerUsuario,
+    registrarUsuario
 };
