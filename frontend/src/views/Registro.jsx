@@ -11,6 +11,7 @@ const Registro = () => {
         nombre: "",
         email: "",
         password: "",
+        rol: "usuario",
         avatar: "",
     });
 
@@ -23,7 +24,7 @@ const Registro = () => {
     const handleRegistrar = async (e) => {
         e.preventDefault();
         try {
-            await register(usuario.email, usuario.password, "usuario", "ES", usuario.nombre);
+            await register(usuario);
             toast.success("¡Usuario registrado con éxito!");
             navigate("/login");
         } catch (error) {

@@ -21,10 +21,12 @@ const MyProvider = ({ children }) => {
         }
     };
 
-    const register = async (email, password, rol, lenguage, nombre) => {
+    const register = async (usuario) => {
         try {
-            await registerUser(email, password, rol, lenguage, nombre);
+            const response = await axios.post(URL_BASE + "/usuarios", usuario);
+            return response.data;
         } catch (error) {
+            console.error("Error en registro:", error);
             throw error;
         }
     };
