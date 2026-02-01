@@ -32,10 +32,11 @@ app.post('/login', async (req, res) => {
 
 app.post('/usuarios', async (req, res) => {
     try {
-        const { nombre, email, password, rol} = req.body;
-        await registrarUsuario(nombre, email, password, rol);
+        const { nombre, email, password, rol, avatar } = req.body;
+        await registrarUsuario(nombre, email, password, rol, avatar);
         res.status(201).send("Usuario registrado con éxito");
     } catch (error) {
+        console.log("Error registrando:", error);
         res.status(500).send(error);
     }
 });

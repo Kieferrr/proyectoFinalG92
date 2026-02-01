@@ -32,9 +32,9 @@ const obtenerUsuario = async (email) => {
     return rows[0];
 };
 
-const registrarUsuario = async (nombre, email, password, rol) => {
-    const consulta = "INSERT INTO usuarios (id, nombre, email, password, rol) VALUES (DEFAULT, $1, $2, $3, $4, $5) RETURNING *";
-    const values = [nombre, email, password, rol];
+const registrarUsuario = async (nombre, email, password, rol, avatar) => {
+    const consulta = "INSERT INTO usuarios (id, nombre, email, password, rol, avatar VALUES (DEFAULT, $1, $2, $3, $4, $5) RETURNING *";
+    const values = [nombre, email, password, rol, avatar];
     const { rowCount } = await pool.query(consulta, values);
     if (!rowCount) throw { code: 500, message: "No se pudo registrar el usuario" };
 };
