@@ -1,6 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { MyContext } from "../context/MyContext";
+import { toast } from "react-toastify";
 
 const Registro = () => {
+    const { register } = useContext(MyContext);
+    const navigate = useNavigate();
+
     const [usuario, setUsuario] = useState({
         nombre: "",
         email: "",
@@ -14,11 +20,22 @@ const Registro = () => {
         setUsuario({ ...usuario, ...field });
     };
 
+    const handleRegistrar = async (e) => {
+        e.preventDefault();
+        try {
+            await register(usuario.email, usuario.password, "usuario", "ES", usuario.nombre);
+            toast.success("¡Usuario registrado con éxito!");
+            navigate("/login");
+        } catch (error) {
+            toast.error("Algo salió mal: " + error.message);
+        }
+    };
+
     return (
         <div className="container mt-5">
             <div className="col-10 col-md-8 col-lg-6 mx-auto">
                 <h2 className="text-center mb-4">Registrarme</h2>
-                <div className="card p-4 shadow-sm">
+                <form onSubmit={handleRegistrar} className="card p-4 shadow-sm">
                     <div className="mb-3">
                         <label className="form-label">Nombre</label>
                         <input
@@ -27,6 +44,8 @@ const Registro = () => {
                             className="form-control"
                             placeholder="Ingresa tu nombre"
                             onChange={handleSetUsuario}
+                            value={usuario.nombre}
+                            required
                         />
                     </div>
                     <div className="mb-3">
@@ -37,6 +56,8 @@ const Registro = () => {
                             className="form-control"
                             placeholder="name@example.com"
                             onChange={handleSetUsuario}
+                            value={usuario.email}
+                            required
                         />
                     </div>
                     <div className="mb-3">
@@ -47,6 +68,8 @@ const Registro = () => {
                             className="form-control"
                             placeholder="******"
                             onChange={handleSetUsuario}
+                            value={usuario.password}
+                            required
                         />
                     </div>
                     <div className="mb-3">
@@ -57,10 +80,11 @@ const Registro = () => {
                             className="form-control"
                             placeholder="URL"
                             onChange={handleSetUsuario}
+                            value={usuario.avatar}
                         />
                     </div>
-                    <button className="btn btn-primary w-100 mt-3">Registrarme</button>
-                </div>
+                    <button type="submit" className="btn btn-primary w-100 mt-3">Registrarme</button>
+                </form>
             </div>
         </div>
     );

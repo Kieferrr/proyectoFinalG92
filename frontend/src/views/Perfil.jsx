@@ -1,17 +1,33 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../context/MyContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { getProfile } from "../services/user";
 
 const Perfil = () => {
-    const { logout } = useContext(MyContext);
+    const { token, logout } = useContext(MyContext);
     const navigate = useNavigate();
+    const [usuario, setUsuario] = useState(null);
 
-    const usuario = {
-        nombre: "Nicolás Kiefer",
-        email: "nico@kieferstore.cl",
-        avatar: "https://ui-avatars.com/api/?name=Nicolas+Kiefer&background=646cff&color=fff"
-    };
+    useEffect(() => {
+        if (!token) {
+            navigate("/login");
+            return;
+        }
+
+        const fetchPerfil = async () => {
+            try {
+                const data = await getProfile(token);
+                setUsuario(data);
+            } catch (error) {
+                toast.error("Error al cargar perfil: " + error.message);
+                logout();
+                navigate("/login");
+            }
+        };
+
+        fetchPerfil();
+    }, [token, navigate, logout]);
 
     const handleDelete = () => {
         const confirm = window.confirm("¿Estás seguro de que quieres eliminar esta publicación?");
@@ -20,6 +36,10 @@ const Perfil = () => {
         }
     };
 
+    if (!usuario) {
+        return <div className="text-center mt-5 text-light">Cargando perfil...</div>;
+    }
+
     return (
         <div className="container mt-5">
             <div className="row">
@@ -27,7 +47,7 @@ const Perfil = () => {
                     <div className="card p-4 text-center h-100" style={{ border: '1px solid rgba(255,255,255,0.05)' }}>
                         <div className="d-flex justify-content-center mb-3">
                             <img
-                                src={usuario.avatar}
+                                src={usuario.avatar || `https://ui-avatars.com/api/?name=${usuario.nombre}&background=646cff&color=fff`}
                                 alt="Avatar"
                                 className="rounded-circle shadow"
                                 width="100"
@@ -36,6 +56,8 @@ const Perfil = () => {
                         </div>
                         <h4 className="text-light fw-bold">{usuario.nombre}</h4>
                         <p className="text-light opacity-75 small">{usuario.email}</p>
+
+                        <span className="badge bg-secondary mb-3">{usuario.rol || 'usuario'}</span>
 
                         <hr className="border-secondary my-4 opacity-25" />
 

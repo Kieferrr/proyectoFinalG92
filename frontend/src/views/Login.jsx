@@ -1,16 +1,16 @@
 import { useState, useContext } from "react";
-import { MyContext } from "../context/MyContext";
 import { useNavigate } from "react-router-dom";
+import { MyContext } from "../context/MyContext";
 import { toast } from "react-toastify";
 
 const Login = () => {
+    const { login } = useContext(MyContext);
+    const navigate = useNavigate();
+
     const [usuario, setUsuario] = useState({
         email: "",
         password: "",
     });
-
-    const { login } = useContext(MyContext);
-    const navigate = useNavigate();
 
     const handleSetUsuario = ({ target: { value, name } }) => {
         const field = {};
@@ -18,21 +18,22 @@ const Login = () => {
         setUsuario({ ...usuario, ...field });
     };
 
-    const iniciarSesion = () => {
-        if (usuario.email !== "" && usuario.password !== "") {
-            login();
-            navigate("/");
-            toast.success("¡Bienvenido de nuevo!");
-        } else {
-            toast.error("Por favor, completa todos los campos");
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try {
+            await login(usuario.email, usuario.password);
+            toast.success("¡Bienvenido!");
+            navigate("/perfil");
+        } catch (error) {
+            toast.error("Error: " + error.message);
         }
     };
 
     return (
         <div className="container mt-5">
             <div className="col-10 col-md-8 col-lg-6 mx-auto">
-                <h2 className="text-center mb-4 text-light">Iniciar Sesión</h2>
-                <div className="card p-4 shadow-sm">
+                <h2 className="text-center mb-4">Iniciar Sesión</h2>
+                <form onSubmit={handleLogin} className="card p-4 shadow-sm">
                     <div className="mb-3">
                         <label className="form-label">Email</label>
                         <input
@@ -41,6 +42,8 @@ const Login = () => {
                             className="form-control"
                             placeholder="name@example.com"
                             onChange={handleSetUsuario}
+                            value={usuario.email}
+                            required
                         />
                     </div>
                     <div className="mb-3">
@@ -51,10 +54,12 @@ const Login = () => {
                             className="form-control"
                             placeholder="******"
                             onChange={handleSetUsuario}
+                            value={usuario.password}
+                            required
                         />
                     </div>
-                    <button onClick={iniciarSesion} className="btn btn-primary w-100 mt-3">Iniciar Sesión</button>
-                </div>
+                    <button type="submit" className="btn btn-primary w-100 mt-3">Ingresar</button>
+                </form>
             </div>
         </div>
     );
