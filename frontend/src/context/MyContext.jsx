@@ -23,8 +23,8 @@ const MyProvider = ({ children }) => {
 
     const register = async (usuario) => {
         try {
-            const response = await axios.post(URL_BASE + "/usuarios", usuario);
-            return response.data;
+            const data = await registerUser(usuario);
+            return data;
         } catch (error) {
             console.error("Error en registro:", error);
             throw error;
