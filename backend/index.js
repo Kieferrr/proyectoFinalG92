@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const { obtenerProductos, verificarCredenciales, obtenerUsuario, registrarUsuario } = require('./consultas');
+const { obtenerProductos, verificarCredenciales, obtenerUsuario, registrarUsuario, crearProducto, obtenerProductosUsuario } = require('./consultas');
 const { verificarToken, reportarConsulta } = require('./middlewares');
 
 app.use(cors());
@@ -18,6 +18,20 @@ app.get('/productos', async (req, res) => {
     }
 });
 
+app.post('/productos', verificarToken, async (req, res) => {
+    try {
+        const { nombre, descripcion, precio, img, stock, condicion } = req.body;
+        const authHeader = req.header("Authorization");
+        const token = authHeader.split("Bearer ")[1];
+        const { email } = jwt.decode(token);
+        const usuario = await obtenerUsuario(email);
+        await crearProducto(nombre, descripcion, precio, img, stock, condicion, usuario.id);
+        res.status(201).send("Producto publicado con éxito");
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
 app.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -25,7 +39,6 @@ app.post('/login', async (req, res) => {
         const token = jwt.sign({ email }, process.env.JWT_SECRET);
         res.send(token);
     } catch (error) {
-        console.log(error);
         res.status(error.code || 500).send(error);
     }
 });
@@ -36,17 +49,18 @@ app.post('/usuarios', async (req, res) => {
         await registrarUsuario(nombre, email, password, rol, avatar);
         res.status(201).send("Usuario registrado con éxito");
     } catch (error) {
-        console.log("Error registrando:", error);
         res.status(500).send(error);
     }
 });
 
 app.get('/usuarios', verificarToken, async (req, res) => {
     try {
-        const token = req.header("Authorization").split("Bearer ")[1];
+        const authHeader = req.header("Authorization");
+        const token = authHeader.split("Bearer ")[1];
         const { email } = jwt.decode(token);
         const usuario = await obtenerUsuario(email);
-        res.json(usuario);
+        const publicaciones = await obtenerProductosUsuario(usuario.id);
+        res.json({ ...usuario, publicaciones });
     } catch (error) {
         res.status(500).send(error);
     }

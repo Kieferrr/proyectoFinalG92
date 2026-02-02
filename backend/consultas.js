@@ -13,7 +13,7 @@ const pool = new Pool({
 });
 
 const obtenerProductos = async () => {
-    const { rows } = await pool.query("SELECT * FROM productos");
+    const { rows } = await pool.query("SELECT * FROM productos ORDER BY created_at DESC");
     return rows;
 };
 
@@ -39,9 +39,25 @@ const registrarUsuario = async (nombre, email, password, rol, avatar) => {
     if (!rowCount) throw { code: 500, message: "No se pudo registrar el usuario" };
 };
 
+const crearProducto = async (nombre, descripcion, precio, img, stock, condicion, usuario_id) => {
+    const consulta = "INSERT INTO productos (nombre, descripcion, precio, img, stock, condicion, usuario_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *";
+    const values = [nombre, descripcion, precio, img, stock, condicion, usuario_id];
+    const { rowCount } = await pool.query(consulta, values);
+    if (!rowCount) throw { code: 500, message: "No se pudo crear la publicación" };
+};
+
+const obtenerProductosUsuario = async (usuario_id) => {
+    const consulta = "SELECT * FROM productos WHERE usuario_id = $1 ORDER BY created_at DESC";
+    const values = [usuario_id];
+    const { rows } = await pool.query(consulta, values);
+    return rows;
+};
+
 module.exports = {
     obtenerProductos,
     verificarCredenciales,
     obtenerUsuario,
-    registrarUsuario
+    registrarUsuario,
+    crearProducto,
+    obtenerProductosUsuario
 };

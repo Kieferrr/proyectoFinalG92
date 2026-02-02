@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
+import axios from "axios";
 import { loginUser, registerUser } from "../services/user";
-import productosData from "../assets/productos.json";
 
 export const MyContext = createContext();
 
@@ -8,8 +8,17 @@ const MyProvider = ({ children }) => {
     const [data, setData] = useState([]);
     const [token, setToken] = useState(null);
 
+    const fetchProductos = async () => {
+        try {
+            const response = await axios.get("https://kieferstore-backend.onrender.com/productos");
+            setData(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     useEffect(() => {
-        setData(productosData);
+        fetchProductos();
     }, []);
 
     const login = async (email, password) => {
@@ -26,7 +35,6 @@ const MyProvider = ({ children }) => {
             const data = await registerUser(usuario);
             return data;
         } catch (error) {
-            console.error("Error en registro:", error);
             throw error;
         }
     };
@@ -36,7 +44,7 @@ const MyProvider = ({ children }) => {
     };
 
     return (
-        <MyContext.Provider value={{ data, setData, token, setToken, login, logout, register }}>
+        <MyContext.Provider value={{ data, setData, token, setToken, login, logout, register, fetchProductos }}>
             {children}
         </MyContext.Provider>
     );

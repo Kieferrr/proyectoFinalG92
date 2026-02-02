@@ -12,8 +12,8 @@ const Home = () => {
 
     useEffect(() => {
         const filtrados = data.filter(p => {
-            const cumpleCondicion = condicionSeleccionada === "Todos" || p.condition === condicionSeleccionada;
-            const cumplePrecio = p.price >= minPrice && p.price <= maxPrice;
+            const cumpleCondicion = condicionSeleccionada === "Todos" || p.condicion === condicionSeleccionada;
+            const cumplePrecio = p.precio >= minPrice && p.precio <= maxPrice;
             return cumpleCondicion && cumplePrecio;
         });
         setProductosFiltrados(filtrados);
@@ -33,9 +33,9 @@ const Home = () => {
     const maxPos = (maxPrice / 2000000) * 100;
 
     const destacados = data.slice(0, 6);
-    const nuevos = data.filter((p) => p.condition === "Nuevo");
-    const usados = data.filter((p) => p.condition === "Usado");
-    const cajaAbierta = data.filter((p) => p.condition === "Caja Abierta");
+    const nuevos = data.filter((p) => p.condicion === "Nuevo");
+    const usados = data.filter((p) => p.condicion === "Usado");
+    const cajaAbierta = data.filter((p) => p.condicion === "Caja Abierta");
 
     return (
         <>
@@ -43,11 +43,9 @@ const Home = () => {
 
             <div className="container-fluid px-5 mt-5">
                 <div className="row">
-
                     <div className="col-lg-2 col-md-3 mb-4">
                         <div className="filter-sidebar sticky-top" style={{ top: '90px', zIndex: 1, fontSize: '0.9rem' }}>
                             <h5 className="mb-4">Filtros</h5>
-
                             <div className="mb-4">
                                 <h6 className="text-secondary small text-uppercase fw-bold mb-3">Condición</h6>
                                 {['Todos', 'Nuevo', 'Usado', 'Caja Abierta'].map((cond) => (
@@ -66,23 +64,19 @@ const Home = () => {
                                     </div>
                                 ))}
                             </div>
-
                             <hr className="border-secondary my-4" />
-
                             <div className="mb-3">
                                 <h6 className="text-secondary small text-uppercase fw-bold mb-3">Precio</h6>
                                 <div className="d-flex justify-content-between text-light small mb-2">
                                     <span>${minPrice.toLocaleString("es-CL")}</span>
                                     <span>${maxPrice.toLocaleString("es-CL")}</span>
                                 </div>
-
                                 <div className="slider-container">
                                     <div className="slider-track"></div>
                                     <div
                                         className="slider-range"
                                         style={{ left: `${minPos}%`, width: `${maxPos - minPos}%` }}
                                     ></div>
-
                                     <input
                                         type="range"
                                         min="0" max="2000000" step="10000"
@@ -97,12 +91,10 @@ const Home = () => {
                                         onChange={handleMaxChange}
                                         className="multi-range-input"
                                     />
-
                                     <div className="thumb" style={{ left: `${minPos}%` }}></div>
                                     <div className="thumb" style={{ left: `${maxPos}%` }}></div>
                                 </div>
                             </div>
-
                             <button
                                 className="btn btn-outline-light btn-sm w-100 mt-4"
                                 onClick={() => {
@@ -117,18 +109,14 @@ const Home = () => {
                     </div>
 
                     <div className="col-lg-10 col-md-9">
-
                         {condicionSeleccionada === "Todos" && minPrice === 0 && maxPrice === 2000000 ? (
                             <>
                                 <h4 className="mb-3 text-light fw-bold">Destacados</h4>
                                 <Gallery items={destacados} />
-
                                 <h4 className="mb-3 text-light fw-bold">Productos Nuevos</h4>
                                 <Gallery items={nuevos} />
-
                                 <h4 className="mb-3 text-light fw-bold">Productos Usados</h4>
                                 <Gallery items={usados} />
-
                                 <h4 className="mb-3 text-light fw-bold">Productos con Caja abierta</h4>
                                 <Gallery items={cajaAbierta} />
                             </>
@@ -140,7 +128,6 @@ const Home = () => {
                                         {productosFiltrados.length} productos
                                     </span>
                                 </div>
-
                                 {productosFiltrados.length > 0 ? (
                                     <Gallery items={productosFiltrados} />
                                 ) : (
@@ -152,7 +139,6 @@ const Home = () => {
                             </>
                         )}
                     </div>
-
                 </div>
             </div>
         </>

@@ -14,7 +14,6 @@ const Perfil = () => {
             navigate("/login");
             return;
         }
-
         const fetchPerfil = async () => {
             try {
                 const data = await getProfile(token);
@@ -25,16 +24,8 @@ const Perfil = () => {
                 navigate("/login");
             }
         };
-
         fetchPerfil();
     }, [token, navigate, logout]);
-
-    const handleDelete = () => {
-        const confirm = window.confirm("¿Estás seguro de que quieres eliminar esta publicación?");
-        if (confirm) {
-            toast.info("Publicación eliminada correctamente");
-        }
-    };
 
     if (!usuario) {
         return <div className="text-center mt-5 text-light">Cargando perfil...</div>;
@@ -52,26 +43,18 @@ const Perfil = () => {
                                 className="rounded-circle shadow"
                                 width="100"
                                 height="100"
+                                style={{ objectFit: 'cover' }}
                             />
                         </div>
                         <h4 className="text-light fw-bold">{usuario.nombre}</h4>
                         <p className="text-light opacity-75 small">{usuario.email}</p>
-
                         <span className="badge bg-secondary mb-3">{usuario.rol || 'usuario'}</span>
-
                         <hr className="border-secondary my-4 opacity-25" />
-
                         <div className="d-flex flex-column gap-3 w-100 mx-auto">
-                            <button
-                                className="btn btn-outline-light py-2"
-                                onClick={() => navigate("/publicar")}
-                            >
+                            <button className="btn btn-outline-light py-2" onClick={() => navigate("/publicar")}>
                                 + Crear Publicación
                             </button>
-                            <button
-                                className="btn btn-outline-secondary py-2"
-                                onClick={logout}
-                            >
+                            <button className="btn btn-outline-secondary py-2" onClick={logout}>
                                 Cerrar Sesión
                             </button>
                         </div>
@@ -81,35 +64,32 @@ const Perfil = () => {
                 <div className="col-md-8">
                     <h3 className="mb-4 text-light fw-bold">Mis Publicaciones</h3>
                     <div className="card p-3" style={{ border: '1px solid rgba(255,255,255,0.05)' }}>
-                        <div className="d-flex align-items-center gap-3 p-3 border-bottom border-secondary position-relative hover-bg" style={{ borderColor: 'rgba(255,255,255,0.1) !important' }}>
-                            <button
-                                onClick={handleDelete}
-                                className="btn btn-sm text-danger position-absolute top-0 end-0 m-2 border-0 fw-bold fs-5"
-                                title="Eliminar publicación"
-                            >
-                                &times;
-                            </button>
-
-                            <img
-                                src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=100&q=60"
-                                alt="Prod"
-                                className="rounded"
-                                width="80"
-                                height="80"
-                                style={{ objectFit: 'cover' }}
-                            />
-                            <div className="flex-grow-1">
-                                <h5 className="mb-1 text-light">Cámara Sony Alpha</h5>
-                                <p className="mb-0 text-light opacity-50 small">ID: #982374 - Publicado hace 2 días</p>
+                        {usuario.publicaciones && usuario.publicaciones.length > 0 ? (
+                            usuario.publicaciones.map(p => (
+                                <div key={p.id} className="d-flex align-items-center gap-3 p-3 border-bottom border-secondary position-relative hover-bg">
+                                    <img
+                                        src={p.img}
+                                        alt={p.nombre}
+                                        className="rounded"
+                                        width="80"
+                                        height="80"
+                                        style={{ objectFit: 'cover' }}
+                                    />
+                                    <div className="flex-grow-1">
+                                        <h5 className="mb-1 text-light">{p.nombre}</h5>
+                                        <p className="mb-0 text-light opacity-50 small">Condición: {p.condicion}</p>
+                                    </div>
+                                    <div className="text-end me-4">
+                                        <p className="mb-0 fw-bold text-primary fs-5">${p.precio.toLocaleString("es-CL")}</p>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="text-center py-5 text-secondary">
+                                <p className="mb-0">No tienes publicaciones activas aún.</p>
+                                <small>¡Anímate a vender algo!</small>
                             </div>
-                            <div className="text-end me-4">
-                                <p className="mb-0 fw-bold text-primary fs-5">$450.000</p>
-                            </div>
-                        </div>
-
-                        <div className="text-center py-5 text-secondary">
-                            <small>No tienes más publicaciones activas.</small>
-                        </div>
+                        )}
                     </div>
                 </div>
             </div>
