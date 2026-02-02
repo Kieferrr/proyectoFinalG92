@@ -36,65 +36,71 @@ const Publicar = () => {
     };
 
     return (
-        <div className="container mt-5 px-5">
-            <div className="col-lg-8 mx-auto">
-                <h2 className="text-light fw-bold mb-4">Crear nueva publicación</h2>
-                <form onSubmit={handleSubmit} className="card p-4 border-0 shadow-lg" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.1)' }}>
-                    <div className="row">
-                        <div className="col-md-8 mb-3">
-                            <label className="text-light opacity-75 small mb-2">Nombre del producto</label>
-                            <input
-                                type="text" name="nombre"
-                                className="form-control bg-transparent text-light border-secondary"
-                                placeholder="Ej: Teclado Mecánico RGB"
-                                style={{ '--bs-border-opacity': '0.5' }}
-                                onChange={handleChange} required
-                            />
-                        </div>
-                        <div className="col-md-4 mb-3">
-                            <label className="text-light opacity-75 small mb-2">Condición</label>
-                            <select name="condicion" className="form-select bg-transparent text-light border-secondary" onChange={handleChange}>
-                                <option className="bg-dark" value="Nuevo">Nuevo</option>
-                                <option className="bg-dark" value="Usado">Usado</option>
-                                <option className="bg-dark" value="Caja Abierta">Caja Abierta</option>
-                            </select>
-                        </div>
-                    </div>
-
+        <div className="container mt-5">
+            <div className="col-10 col-md-8 col-lg-6 mx-auto">
+                <h2 className="text-center mb-4">Publicar Producto</h2>
+                <form onSubmit={handleSubmit} className="card p-4 shadow-sm">
                     <div className="mb-3">
-                        <label className="text-light opacity-75 small mb-2">Descripción detallada</label>
+                        <label className="form-label">Nombre del Producto</label>
+                        <input
+                            type="text"
+                            name="nombre"
+                            className="form-control"
+                            placeholder="Ingresa el nombre"
+                            onChange={handleChange}
+                            value={producto.nombre}
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Descripción</label>
                         <textarea
-                            name="descripcion" rows="3"
-                            className="form-control bg-transparent text-light border-secondary"
-                            placeholder="Describe el estado y características..."
-                            onChange={handleChange} required
+                            name="descripcion"
+                            className="form-control"
+                            placeholder="Escribe una descripción"
+                            onChange={handleChange}
+                            value={producto.descripcion}
+                            required
                         ></textarea>
                     </div>
-
-                    <div className="row">
-                        <div className="col-md-6 mb-3">
-                            <label className="text-light opacity-75 small mb-2">Precio ($ CLP)</label>
-                            <input
-                                type="number" name="precio"
-                                className="form-control bg-transparent text-light border-secondary"
-                                placeholder="50000"
-                                onChange={handleChange} required
-                            />
-                        </div>
-                        <div className="col-md-6 mb-3">
-                            <label className="text-light opacity-75 small mb-2">URL de la Imagen</label>
-                            <input
-                                type="text" name="img"
-                                className="form-control bg-transparent text-light border-secondary"
-                                placeholder="https://images.unsplash.com/..."
-                                onChange={handleChange} required
-                            />
-                        </div>
+                    <div className="mb-3">
+                        <label className="form-label">Precio</label>
+                        <input
+                            type="number"
+                            name="precio"
+                            className="form-control"
+                            placeholder="Ej: 50000"
+                            onChange={handleChange}
+                            value={producto.precio}
+                            required
+                        />
                     </div>
-
-                    <button type="submit" className="btn btn-primary fw-bold py-2 mt-3 shadow">
-                        Publicar Producto
-                    </button>
+                    <div className="mb-3">
+                        <label className="form-label">URL de la Imagen</label>
+                        <input
+                            type="text"
+                            name="img"
+                            className="form-control"
+                            placeholder="URL de la imagen"
+                            onChange={handleChange}
+                            value={producto.img}
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Condición</label>
+                        <select
+                            name="condicion"
+                            className="form-select"
+                            onChange={handleChange}
+                            value={producto.condicion}
+                        >
+                            <option value="Nuevo">Nuevo</option>
+                            <option value="Usado">Usado</option>
+                            <option value="Caja Abierta">Caja Abierta</option>
+                        </select>
+                    </div>
+                    <button type="submit" className="btn btn-primary w-100 mt-3">Publicar ahora</button>
                 </form>
             </div>
         </div>

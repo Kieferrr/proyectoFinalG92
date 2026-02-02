@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const { obtenerProductos, verificarCredenciales, obtenerUsuario, registrarUsuario, crearProducto, obtenerProductosUsuario } = require('./consultas');
+const { obtenerProductos, verificarCredenciales, obtenerUsuario, registrarUsuario, crearProducto, obtenerProductosUsuario, eliminarProducto } = require('./consultas');
 const { verificarToken, reportarConsulta } = require('./middlewares');
 
 app.use(cors());
@@ -21,14 +21,26 @@ app.get('/productos', async (req, res) => {
 app.post('/productos', verificarToken, async (req, res) => {
     try {
         const { nombre, descripcion, precio, img, stock, condicion } = req.body;
-        const authHeader = req.header("Authorization");
-        const token = authHeader.split("Bearer ")[1];
+        const token = req.header("Authorization").split("Bearer ")[1];
         const { email } = jwt.decode(token);
         const usuario = await obtenerUsuario(email);
         await crearProducto(nombre, descripcion, precio, img, stock, condicion, usuario.id);
         res.status(201).send("Producto publicado con éxito");
     } catch (error) {
         res.status(500).send(error);
+    }
+});
+
+app.delete('/productos/:id', verificarToken, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const token = req.header("Authorization").split("Bearer ")[1];
+        const { email } = jwt.decode(token);
+        const usuario = await obtenerUsuario(email);
+        await eliminarProducto(id, usuario.id);
+        res.send("Producto eliminado con éxito");
+    } catch (error) {
+        res.status(error.code || 500).send(error.message);
     }
 });
 
@@ -55,8 +67,7 @@ app.post('/usuarios', async (req, res) => {
 
 app.get('/usuarios', verificarToken, async (req, res) => {
     try {
-        const authHeader = req.header("Authorization");
-        const token = authHeader.split("Bearer ")[1];
+        const token = req.header("Authorization").split("Bearer ")[1];
         const { email } = jwt.decode(token);
         const usuario = await obtenerUsuario(email);
         const publicaciones = await obtenerProductosUsuario(usuario.id);

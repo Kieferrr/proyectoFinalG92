@@ -12,8 +12,10 @@ const Home = () => {
 
     useEffect(() => {
         const filtrados = data.filter(p => {
-            const cumpleCondicion = condicionSeleccionada === "Todos" || p.condicion === condicionSeleccionada;
-            const cumplePrecio = p.precio >= minPrice && p.precio <= maxPrice;
+            const precio = p.precio || p.price || 0;
+            const condicion = p.condicion || p.condition || "Nuevo";
+            const cumpleCondicion = condicionSeleccionada === "Todos" || condicion === condicionSeleccionada;
+            const cumplePrecio = precio >= minPrice && precio <= maxPrice;
             return cumpleCondicion && cumplePrecio;
         });
         setProductosFiltrados(filtrados);
@@ -33,9 +35,9 @@ const Home = () => {
     const maxPos = (maxPrice / 2000000) * 100;
 
     const destacados = data.slice(0, 6);
-    const nuevos = data.filter((p) => p.condicion === "Nuevo");
-    const usados = data.filter((p) => p.condicion === "Usado");
-    const cajaAbierta = data.filter((p) => p.condicion === "Caja Abierta");
+    const nuevos = data.filter((p) => (p.condicion || p.condition) === "Nuevo");
+    const usados = data.filter((p) => (p.condicion || p.condition) === "Usado");
+    const cajaAbierta = data.filter((p) => (p.condicion || p.condition) === "Caja Abierta");
 
     return (
         <>
@@ -68,46 +70,21 @@ const Home = () => {
                             <div className="mb-3">
                                 <h6 className="text-secondary small text-uppercase fw-bold mb-3">Precio</h6>
                                 <div className="d-flex justify-content-between text-light small mb-2">
-                                    <span>${minPrice.toLocaleString("es-CL")}</span>
-                                    <span>${maxPrice.toLocaleString("es-CL")}</span>
+                                    <span>${(minPrice || 0).toLocaleString("es-CL")}</span>
+                                    <span>${(maxPrice || 0).toLocaleString("es-CL")}</span>
                                 </div>
                                 <div className="slider-container">
                                     <div className="slider-track"></div>
-                                    <div
-                                        className="slider-range"
-                                        style={{ left: `${minPos}%`, width: `${maxPos - minPos}%` }}
-                                    ></div>
-                                    <input
-                                        type="range"
-                                        min="0" max="2000000" step="10000"
-                                        value={minPrice}
-                                        onChange={handleMinChange}
-                                        className="multi-range-input"
-                                    />
-                                    <input
-                                        type="range"
-                                        min="0" max="2000000" step="10000"
-                                        value={maxPrice}
-                                        onChange={handleMaxChange}
-                                        className="multi-range-input"
-                                    />
+                                    <div className="slider-range" style={{ left: `${minPos}%`, width: `${maxPos - minPos}%` }}></div>
+                                    <input type="range" min="0" max="2000000" step="10000" value={minPrice} onChange={handleMinChange} className="multi-range-input" />
+                                    <input type="range" min="0" max="2000000" step="10000" value={maxPrice} onChange={handleMaxChange} className="multi-range-input" />
                                     <div className="thumb" style={{ left: `${minPos}%` }}></div>
                                     <div className="thumb" style={{ left: `${maxPos}%` }}></div>
                                 </div>
                             </div>
-                            <button
-                                className="btn btn-outline-light btn-sm w-100 mt-4"
-                                onClick={() => {
-                                    setCondicionSeleccionada("Todos");
-                                    setMinPrice(0);
-                                    setMaxPrice(2000000);
-                                }}
-                            >
-                                Limpiar Filtros
-                            </button>
+                            <button className="btn btn-outline-light btn-sm w-100 mt-4" onClick={() => { setCondicionSeleccionada("Todos"); setMinPrice(0); setMaxPrice(2000000); }}>Limpiar Filtros</button>
                         </div>
                     </div>
-
                     <div className="col-lg-10 col-md-9">
                         {condicionSeleccionada === "Todos" && minPrice === 0 && maxPrice === 2000000 ? (
                             <>
@@ -124,18 +101,9 @@ const Home = () => {
                             <>
                                 <div className="d-flex justify-content-between align-items-center mb-3">
                                     <h4 className="text-light fw-bold">Resultados</h4>
-                                    <span className="badge border border-secondary text-light">
-                                        {productosFiltrados.length} productos
-                                    </span>
+                                    <span className="badge border border-secondary text-light">{productosFiltrados.length} productos</span>
                                 </div>
-                                {productosFiltrados.length > 0 ? (
-                                    <Gallery items={productosFiltrados} />
-                                ) : (
-                                    <div className="text-center py-5">
-                                        <h3 className="text-light opacity-50">Sin resultados 🕵️‍♂️</h3>
-                                        <p className="text-light mt-3">Prueba ampliando el rango de precios.</p>
-                                    </div>
-                                )}
+                                {productosFiltrados.length > 0 ? <Gallery items={productosFiltrados} /> : <div className="text-center py-5"><h3 className="text-light opacity-50">Sin resultados 🕵️‍♂️</h3></div>}
                             </>
                         )}
                     </div>

@@ -53,11 +53,19 @@ const obtenerProductosUsuario = async (usuario_id) => {
     return rows;
 };
 
+const eliminarProducto = async (id, usuario_id) => {
+    const consulta = "DELETE FROM productos WHERE id = $1 AND usuario_id = $2";
+    const values = [id, usuario_id];
+    const { rowCount } = await pool.query(consulta, values);
+    if (!rowCount) throw { code: 403, message: "No tienes permiso para eliminar este producto o no existe" };
+};
+
 module.exports = {
     obtenerProductos,
     verificarCredenciales,
     obtenerUsuario,
     registrarUsuario,
     crearProducto,
-    obtenerProductosUsuario
+    obtenerProductosUsuario,
+    eliminarProducto
 };
