@@ -25,7 +25,7 @@ const verificarCredenciales = async (email, password) => {
 };
 
 const obtenerUsuario = async (email) => {
-    const consulta = "SELECT id, nombre, email, rol, created_at FROM usuarios WHERE email = $1";
+    const consulta = "SELECT id, nombre, email, rol, avatar, created_at FROM usuarios WHERE email = $1";
     const values = [email];
     const { rows, rowCount } = await pool.query(consulta, values);
     if (!rowCount) throw { code: 404, message: "Usuario no encontrado" };
@@ -33,7 +33,7 @@ const obtenerUsuario = async (email) => {
 };
 
 const registrarUsuario = async (nombre, email, password, rol, avatar) => {
-    const consulta = "INSERT INTO usuarios (id, nombre, email, password, rol, avatar VALUES (DEFAULT, $1, $2, $3, $4, $5) RETURNING *";
+    const consulta = "INSERT INTO usuarios (nombre, email, password, rol, avatar) VALUES ($1, $2, $3, $4, $5) RETURNING *";
     const values = [nombre, email, password, rol, avatar];
     const { rowCount } = await pool.query(consulta, values);
     if (!rowCount) throw { code: 500, message: "No se pudo registrar el usuario" };

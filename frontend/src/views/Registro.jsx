@@ -16,9 +16,7 @@ const Registro = () => {
     });
 
     const handleSetUsuario = ({ target: { value, name } }) => {
-        const field = {};
-        field[name] = value;
-        setUsuario({ ...usuario, ...field });
+        setUsuario({ ...usuario, [name]: value });
     };
 
     const handleRegistrar = async (e) => {
@@ -28,21 +26,21 @@ const Registro = () => {
             toast.success("¡Usuario registrado con éxito!");
             navigate("/login");
         } catch (error) {
-            toast.error("Algo salió mal: " + error.message);
+            toast.error("Error: el email ya está en uso o faltan datos");
         }
     };
 
     return (
         <div className="container mt-5">
             <div className="col-10 col-md-8 col-lg-6 mx-auto">
-                <h2 className="text-center mb-4">Registrarme</h2>
-                <form onSubmit={handleRegistrar} className="card p-4 shadow-sm">
+                <h2 className="text-center mb-4 text-light">Registrarme</h2>
+                <form onSubmit={handleRegistrar} className="card p-4 shadow-sm bg-dark text-light border-secondary">
                     <div className="mb-3">
                         <label className="form-label">Nombre</label>
                         <input
                             type="text"
                             name="nombre"
-                            className="form-control"
+                            className="form-control bg-dark text-light border-secondary"
                             placeholder="Ingresa tu nombre"
                             onChange={handleSetUsuario}
                             value={usuario.nombre}
@@ -54,7 +52,7 @@ const Registro = () => {
                         <input
                             type="email"
                             name="email"
-                            className="form-control"
+                            className="form-control bg-dark text-light border-secondary"
                             placeholder="name@example.com"
                             onChange={handleSetUsuario}
                             value={usuario.email}
@@ -66,7 +64,7 @@ const Registro = () => {
                         <input
                             type="password"
                             name="password"
-                            className="form-control"
+                            className="form-control bg-dark text-light border-secondary"
                             placeholder="******"
                             onChange={handleSetUsuario}
                             value={usuario.password}
@@ -78,8 +76,8 @@ const Registro = () => {
                         <input
                             type="text"
                             name="avatar"
-                            className="form-control"
-                            placeholder="URL"
+                            className="form-control bg-dark text-light border-secondary"
+                            placeholder="URL de imagen"
                             onChange={handleSetUsuario}
                             value={usuario.avatar}
                         />
