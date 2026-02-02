@@ -1,71 +1,134 @@
 import { useState, useContext } from "react";
-import { MyContext } from "../context/MyContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { MyContext } from "../context/MyContext";
 
 const Publicar = () => {
-    const { token, fetchProductos } = useContext(MyContext);
     const navigate = useNavigate();
+    const { token, fetchProductos } = useContext(MyContext);
 
-    const [producto, setProducto] = useState({
+    const [form, setForm] = useState({
         nombre: "",
-        descripcion: "",
+        desc: "",
         precio: "",
         img: "",
-        stock: 1,
-        condicion: "Nuevo"
+        condition: "Nuevo"
     });
 
     const handleChange = (e) => {
-        setProducto({ ...producto, [e.target.name]: e.target.value });
+        setForm({ ...form, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("https://kieferstore-backend.onrender.com/productos", producto, {
+            const productoFinal = {
+                nombre: form.nombre,
+                descripcion: form.desc,
+                precio: form.precio,
+                img: form.img,
+                stock: 1,
+                condicion: form.condition
+            };
+
+            await axios.post("https://kieferstore-backend.onrender.com/productos", productoFinal, {
                 headers: { Authorization: `Bearer ${token}` }
             });
+
             toast.success("¡Producto publicado con éxito!");
             await fetchProductos();
             navigate("/perfil");
         } catch (error) {
-            toast.error("Error al publicar");
+            toast.error("Error al publicar el producto");
         }
     };
 
     return (
         <div className="container mt-5">
-            <div className="col-10 col-md-8 col-lg-6 mx-auto">
-                <h2 className="text-center mb-4">Publicar Producto</h2>
-                <form onSubmit={handleSubmit} className="card p-4 shadow-sm">
-                    <div className="mb-3">
-                        <label className="form-label">Nombre del Producto</label>
-                        <input type="text" name="nombre" className="form-control" placeholder="Ingresa el nombre" onChange={handleChange} required />
-                    </div>
-                    <div className="mb-3">
-                        <label className="form-label">Descripción</label>
-                        <textarea name="descripcion" className="form-control" placeholder="Escribe una descripción" onChange={handleChange} required></textarea>
-                    </div>
-                    <div className="mb-3">
-                        <label className="form-label">Precio</label>
-                        <input type="number" name="precio" className="form-control" placeholder="Ej: 50000" onChange={handleChange} required />
-                    </div>
-                    <div className="mb-3">
-                        <label className="form-label">URL de la Imagen</label>
-                        <input type="text" name="img" className="form-control" placeholder="URL" onChange={handleChange} required />
-                    </div>
-                    <div className="mb-3">
-                        <label className="form-label">Condición</label>
-                        <select name="condicion" className="form-select" onChange={handleChange}>
-                            <option value="Nuevo">Nuevo</option>
-                            <option value="Usado">Usado</option>
-                            <option value="Caja Abierta">Caja Abierta</option>
-                        </select>
-                    </div>
-                    <button type="submit" className="btn btn-primary w-100 mt-3">Publicar ahora</button>
-                </form>
+            <div className="col-10 col-md-8 mx-auto">
+                <h2 className="text-center mb-4 text-light">Publicar un producto</h2>
+                <div className="card p-4 shadow-sm">
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                            <label className="form-label text-light">Nombre del Producto</label>
+                            <input
+                                type="text"
+                                name="nombre"
+                                className="form-control"
+                                placeholder="Ej: iPhone 13 Pro Max"
+                                onChange={handleChange}
+                                value={form.nombre}
+                                required
+                            />
+                        </div>
+
+                        <div className="mb-3">
+                            <label className="form-label text-light">Descripción</label>
+                            <textarea
+                                name="desc"
+                                className="form-control"
+                                placeholder="Detalles del producto, estado, tiempo de uso..."
+                                rows="3"
+                                onChange={handleChange}
+                                value={form.desc}
+                                required
+                            ></textarea>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-6 mb-3">
+                                <label className="form-label text-light">Precio ($)</label>
+                                <input
+                                    type="number"
+                                    name="precio"
+                                    className="form-control"
+                                    placeholder="Ej: 500000"
+                                    onChange={handleChange}
+                                    value={form.precio}
+                                    required
+                                />
+                            </div>
+                            <div className="col-md-6 mb-3">
+                                <label className="form-label text-light">Condición</label>
+                                <select
+                                    name="condition"
+                                    className="form-control"
+                                    onChange={handleChange}
+                                    value={form.condition}
+                                >
+                                    <option value="Nuevo">Nuevo</option>
+                                    <option value="Usado">Usado</option>
+                                    <option value="Caja Abierta">Caja Abierta</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="form-label text-light">Foto del producto</label>
+                            <input
+                                type="text"
+                                name="img"
+                                className="form-control"
+                                placeholder="URL"
+                                onChange={handleChange}
+                                value={form.img}
+                                required
+                            />
+                        </div>
+
+                        <div className="d-flex gap-2">
+                            <button type="submit" className="btn btn-primary flex-grow-1">Publicar Ahora</button>
+                            <button
+                                type="button"
+                                className="btn btn-secondary"
+                                onClick={() => navigate("/perfil")}
+                            >
+                                Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );
