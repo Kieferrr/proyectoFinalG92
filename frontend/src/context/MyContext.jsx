@@ -11,16 +11,15 @@ const MyProvider = ({ children }) => {
     const fetchProductos = async () => {
         try {
             const response = await axios.get("https://kieferstore-backend.onrender.com/productos");
-
-            const productosNormalizados = response.data.map(p => ({
+            const normalizados = response.data.map(p => ({
                 ...p,
-                price: p.precio || p.price || 0,
-                precio: p.precio || p.price || 0,
-                condition: p.condicion || p.condition || "Nuevo",
-                condicion: p.condicion || p.condition || "Nuevo"
+                id: p.id.toString(),
+                name: p.nombre,
+                price: p.precio,
+                condition: p.condicion,
+                desc: p.descripcion
             }));
-
-            setData(productosNormalizados);
+            setData(normalizados);
         } catch (error) {
             console.error(error);
         }

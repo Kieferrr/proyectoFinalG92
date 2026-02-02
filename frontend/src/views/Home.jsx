@@ -12,37 +12,32 @@ const Home = () => {
 
     useEffect(() => {
         const filtrados = data.filter(p => {
-            const precio = p.precio || p.price || 0;
-            const condicion = p.condicion || p.condition || "Nuevo";
-            const cumpleCondicion = condicionSeleccionada === "Todos" || condicion === condicionSeleccionada;
-            const cumplePrecio = precio >= minPrice && precio <= maxPrice;
+            const cumpleCondicion = condicionSeleccionada === "Todos" || p.condition === condicionSeleccionada;
+            const cumplePrecio = p.price >= minPrice && p.price <= maxPrice;
             return cumpleCondicion && cumplePrecio;
         });
         setProductosFiltrados(filtrados);
     }, [data, condicionSeleccionada, minPrice, maxPrice]);
 
     const handleMinChange = (e) => {
-        const val = Math.min(Number(e.target.value), maxPrice - 10000);
-        setMinPrice(val);
+        setMinPrice(Math.min(Number(e.target.value), maxPrice - 10000));
     };
 
     const handleMaxChange = (e) => {
-        const val = Math.max(Number(e.target.value), minPrice + 10000);
-        setMaxPrice(val);
+        setMaxPrice(Math.max(Number(e.target.value), minPrice + 10000));
     };
 
     const minPos = (minPrice / 2000000) * 100;
     const maxPos = (maxPrice / 2000000) * 100;
 
     const destacados = data.slice(0, 6);
-    const nuevos = data.filter((p) => (p.condicion || p.condition) === "Nuevo");
-    const usados = data.filter((p) => (p.condicion || p.condition) === "Usado");
-    const cajaAbierta = data.filter((p) => (p.condicion || p.condition) === "Caja Abierta");
+    const nuevos = data.filter((p) => p.condition === "Nuevo");
+    const usados = data.filter((p) => p.condition === "Usado");
+    const cajaAbierta = data.filter((p) => p.condition === "Caja Abierta");
 
     return (
         <>
             <div className="hero-banner"></div>
-
             <div className="container-fluid px-5 mt-5">
                 <div className="row">
                     <div className="col-lg-2 col-md-3 mb-4">
@@ -52,17 +47,8 @@ const Home = () => {
                                 <h6 className="text-secondary small text-uppercase fw-bold mb-3">Condición</h6>
                                 {['Todos', 'Nuevo', 'Usado', 'Caja Abierta'].map((cond) => (
                                     <div className="form-check mb-2" key={cond}>
-                                        <input
-                                            className="form-check-input"
-                                            type="radio"
-                                            name="condicion"
-                                            id={cond}
-                                            checked={condicionSeleccionada === cond}
-                                            onChange={() => setCondicionSeleccionada(cond)}
-                                        />
-                                        <label className="form-check-label" htmlFor={cond}>
-                                            {cond}
-                                        </label>
+                                        <input className="form-check-input" type="radio" name="condicion" id={cond} checked={condicionSeleccionada === cond} onChange={() => setCondicionSeleccionada(cond)} />
+                                        <label className="form-check-label" htmlFor={cond}>{cond}</label>
                                     </div>
                                 ))}
                             </div>
@@ -70,8 +56,8 @@ const Home = () => {
                             <div className="mb-3">
                                 <h6 className="text-secondary small text-uppercase fw-bold mb-3">Precio</h6>
                                 <div className="d-flex justify-content-between text-light small mb-2">
-                                    <span>${(minPrice || 0).toLocaleString("es-CL")}</span>
-                                    <span>${(maxPrice || 0).toLocaleString("es-CL")}</span>
+                                    <span>${minPrice.toLocaleString("es-CL")}</span>
+                                    <span>${maxPrice.toLocaleString("es-CL")}</span>
                                 </div>
                                 <div className="slider-container">
                                     <div className="slider-track"></div>

@@ -25,7 +25,7 @@ app.post('/productos', verificarToken, async (req, res) => {
         const { email } = jwt.decode(token);
         const usuario = await obtenerUsuario(email);
         await crearProducto(nombre, descripcion, precio, img, stock, condicion, usuario.id);
-        res.status(201).send("Producto publicado con éxito");
+        res.status(201).send("OK");
     } catch (error) {
         res.status(500).send(error);
     }
@@ -38,9 +38,9 @@ app.delete('/productos/:id', verificarToken, async (req, res) => {
         const { email } = jwt.decode(token);
         const usuario = await obtenerUsuario(email);
         await eliminarProducto(id, usuario.id);
-        res.send("Producto eliminado con éxito");
+        res.send("OK");
     } catch (error) {
-        res.status(error.code || 500).send(error.message);
+        res.status(500).send(error);
     }
 });
 
@@ -59,7 +59,7 @@ app.post('/usuarios', async (req, res) => {
     try {
         const { nombre, email, password, rol, avatar } = req.body;
         await registrarUsuario(nombre, email, password, rol, avatar);
-        res.status(201).send("Usuario registrado con éxito");
+        res.status(201).send("OK");
     } catch (error) {
         res.status(500).send(error);
     }
@@ -79,7 +79,7 @@ app.get('/usuarios', verificarToken, async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
+    console.log(`Server on ${PORT}`);
 });
 
 module.exports = app;

@@ -42,59 +42,23 @@ const Publicar = () => {
                 <form onSubmit={handleSubmit} className="card p-4 shadow-sm">
                     <div className="mb-3">
                         <label className="form-label">Nombre del Producto</label>
-                        <input
-                            type="text"
-                            name="nombre"
-                            className="form-control"
-                            placeholder="Ingresa el nombre"
-                            onChange={handleChange}
-                            value={producto.nombre}
-                            required
-                        />
+                        <input type="text" name="nombre" className="form-control" placeholder="Ingresa el nombre" onChange={handleChange} required />
                     </div>
                     <div className="mb-3">
                         <label className="form-label">Descripción</label>
-                        <textarea
-                            name="descripcion"
-                            className="form-control"
-                            placeholder="Escribe una descripción"
-                            onChange={handleChange}
-                            value={producto.descripcion}
-                            required
-                        ></textarea>
+                        <textarea name="descripcion" className="form-control" placeholder="Escribe una descripción" onChange={handleChange} required></textarea>
                     </div>
                     <div className="mb-3">
                         <label className="form-label">Precio</label>
-                        <input
-                            type="number"
-                            name="precio"
-                            className="form-control"
-                            placeholder="Ej: 50000"
-                            onChange={handleChange}
-                            value={producto.precio}
-                            required
-                        />
+                        <input type="number" name="precio" className="form-control" placeholder="Ej: 50000" onChange={handleChange} required />
                     </div>
                     <div className="mb-3">
                         <label className="form-label">URL de la Imagen</label>
-                        <input
-                            type="text"
-                            name="img"
-                            className="form-control"
-                            placeholder="URL de la imagen"
-                            onChange={handleChange}
-                            value={producto.img}
-                            required
-                        />
+                        <input type="text" name="img" className="form-control" placeholder="URL" onChange={handleChange} required />
                     </div>
                     <div className="mb-3">
                         <label className="form-label">Condición</label>
-                        <select
-                            name="condicion"
-                            className="form-select"
-                            onChange={handleChange}
-                            value={producto.condicion}
-                        >
+                        <select name="condicion" className="form-select" onChange={handleChange}>
                             <option value="Nuevo">Nuevo</option>
                             <option value="Usado">Usado</option>
                             <option value="Caja Abierta">Caja Abierta</option>
