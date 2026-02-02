@@ -1,56 +1,39 @@
-// const URL_BASE = "http://localhost:3000";
+import axios from "axios";
+
 const URL_BASE = "https://kieferstore-backend.onrender.com";
 
-export const registerUser = async (email, password, rol, lenguage, nombre) => {
+const loginUser = async (email, password) => {
     try {
-        const response = await fetch(`${URL_BASE}/usuarios`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password, rol, lenguage, nombre }),
+        const response = await axios.post(URL_BASE + "/login", {
+            email,
+            password,
         });
-
-        if (!response.ok) throw new Error("Error al registrar usuario");
-        return await response.json();
+        return response.data;
     } catch (error) {
         throw error;
     }
 };
 
-export const loginUser = async (email, password) => {
+const registerUser = async (usuario) => {
     try {
-        const response = await fetch(`${URL_BASE}/login`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password }),
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.message || "Email o contraseña incorrectos");
-        }
-
-        const data = await response.text();
-        return data;
+        const response = await axios.post(URL_BASE + "/usuarios", usuario);
+        return response.data;
     } catch (error) {
         throw error;
     }
 };
 
-export const getProfile = async (token) => {
+const getProfile = async (token) => {
     try {
-        const response = await fetch(`${URL_BASE}/usuarios`, {
-            method: "GET",
+        const response = await axios.get(URL_BASE + "/usuarios", {
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
         });
-
-        if (!response.ok) throw new Error("No autorizado");
-
-        const data = await response.json();
-        return data;
+        return response.data;
     } catch (error) {
         throw error;
     }
 };
+
+export { loginUser, registerUser, getProfile };
