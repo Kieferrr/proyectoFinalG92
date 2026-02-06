@@ -13,9 +13,7 @@ const Login = () => {
     });
 
     const handleSetUsuario = ({ target: { value, name } }) => {
-        const field = {};
-        field[name] = value;
-        setUsuario({ ...usuario, ...field });
+        setUsuario({ ...usuario, [name]: value });
     };
 
     const handleLogin = async (e) => {
@@ -25,36 +23,38 @@ const Login = () => {
             toast.success("¡Bienvenido!");
             navigate("/perfil");
         } catch (error) {
-            toast.error("Error: " + error.message);
+            toast.error("Error: Credenciales inválidas");
         }
     };
 
     return (
         <div className="container mt-5">
             <div className="col-10 col-md-8 col-lg-6 mx-auto">
-                <h2 className="text-center mb-4">Iniciar Sesión</h2>
+                <h2 className="text-center mb-4 text-light">Iniciar Sesión</h2>
                 <form onSubmit={handleLogin} className="card p-4 shadow-sm">
                     <div className="mb-3">
-                        <label className="form-label">Email</label>
+                        <label className="form-label text-light">Email</label>
                         <input
                             type="email"
                             name="email"
                             className="form-control"
-                            placeholder="name@example.com"
-                            onChange={handleSetUsuario}
+                            placeholder="correo@ejemplo.com"
                             value={usuario.email}
+                            onChange={handleSetUsuario}
+                            autoComplete="email"
                             required
                         />
                     </div>
                     <div className="mb-3">
-                        <label className="form-label">Password</label>
+                        <label className="form-label text-light">Contraseña</label>
                         <input
                             type="password"
                             name="password"
                             className="form-control"
                             placeholder="******"
-                            onChange={handleSetUsuario}
                             value={usuario.password}
+                            onChange={handleSetUsuario}
+                            autoComplete="current-password"
                             required
                         />
                     </div>

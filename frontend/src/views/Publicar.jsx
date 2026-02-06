@@ -49,7 +49,8 @@ const Publicar = () => {
             <div className="col-10 col-md-8 mx-auto">
                 <h2 className="text-center mb-4 text-light">Publicar un producto</h2>
                 <div className="card p-4 shadow-sm">
-                    <form onSubmit={handleSubmit}>
+                    {/* Añadimos autoComplete="off" al formulario completo por seguridad */}
+                    <form onSubmit={handleSubmit} autoComplete="off">
                         <div className="mb-3">
                             <label className="form-label text-light">Nombre del Producto</label>
                             <input
@@ -59,6 +60,7 @@ const Publicar = () => {
                                 placeholder="Ej: iPhone 13 Pro Max"
                                 onChange={handleChange}
                                 value={form.nombre}
+                                autoComplete="off" // Evita sugerencias de nombres anteriores
                                 required
                             />
                         </div>
@@ -72,6 +74,7 @@ const Publicar = () => {
                                 rows="3"
                                 onChange={handleChange}
                                 value={form.desc}
+                                autoComplete="off"
                                 required
                             ></textarea>
                         </div>
@@ -86,6 +89,7 @@ const Publicar = () => {
                                     placeholder="Ej: 500000"
                                     onChange={handleChange}
                                     value={form.precio}
+                                    autoComplete="off"
                                     required
                                 />
                             </div>
@@ -113,6 +117,7 @@ const Publicar = () => {
                                 placeholder="URL"
                                 onChange={handleChange}
                                 value={form.img}
+                                autoComplete="off" // Evita que salgan URLs de fotos antiguas
                                 required
                             />
                         </div>

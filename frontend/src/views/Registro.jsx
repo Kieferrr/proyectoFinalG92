@@ -34,7 +34,7 @@ const Registro = () => {
         <div className="container mt-5">
             <div className="col-10 col-md-8 col-lg-6 mx-auto">
                 <h2 className="text-center mb-4">Registrarme</h2>
-                <form onSubmit={handleRegistrar} className="card p-4 shadow-sm">
+                <form onSubmit={handleRegistrar} autoComplete="off" className="card p-4 shadow-sm">
                     <div className="mb-3">
                         <label className="form-label">Nombre</label>
                         <input
@@ -44,6 +44,7 @@ const Registro = () => {
                             placeholder="Ingresa tu nombre"
                             onChange={handleSetUsuario}
                             value={usuario.nombre}
+                            autoComplete="off"
                             required
                         />
                     </div>
@@ -53,9 +54,10 @@ const Registro = () => {
                             type="email"
                             name="email"
                             className="form-control"
-                            placeholder="name@example.com"
+                            placeholder="nombre@ejemplo.com"
                             onChange={handleSetUsuario}
                             value={usuario.email}
+                            autoComplete="username"
                             required
                         />
                     </div>
@@ -68,6 +70,7 @@ const Registro = () => {
                             placeholder="******"
                             onChange={handleSetUsuario}
                             value={usuario.password}
+                            autoComplete="new-password"
                             required
                         />
                     </div>
@@ -80,6 +83,7 @@ const Registro = () => {
                             placeholder="URL"
                             onChange={handleSetUsuario}
                             value={usuario.avatar}
+                            autoComplete="off"
                         />
                     </div>
                     <button type="submit" className="btn btn-primary w-100 mt-3">Registrarme</button>
