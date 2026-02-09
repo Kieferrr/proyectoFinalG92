@@ -54,7 +54,7 @@ const Registro = () => {
                             type="email"
                             name="email"
                             className="form-control"
-                            placeholder="nombre@ejemplo.com"
+                            placeholder="correo@ejemplo.com"
                             onChange={handleSetUsuario}
                             value={usuario.email}
                             autoComplete="username"
